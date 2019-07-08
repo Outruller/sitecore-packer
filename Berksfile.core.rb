@@ -13,13 +13,33 @@ def scp_packer_sources
   scp_packer_cookbook 'dotnet'
   scp_packer_cookbook 'iis'
 
+  # MSSQL
   scp_packer_cookbook 'sql16d'
-  scp_packer_cookbook 'solr'
+
+  # SOLR
+  scp_packer_cookbook 'solr662'
+  scp_packer_cookbook 'solr721'
 
   # Sitecore 9.0
   scp_packer_cookbook 'sc900'
   scp_packer_cookbook 'sc901'
   scp_packer_cookbook 'sc902'
+
+  # Sitecore 9.0 SXA JSS
+  scp_packer_cookbook 'sc902_sxa171_jss1100'
+  scp_packer_cookbook 'sc902_sxa180_jss1100'
+
+  # Sitecore 9.1
+  scp_packer_cookbook 'sc910'
+  scp_packer_cookbook 'sc911'
+
+  # Sitecore 9.1 SXA JSS
+  scp_packer_cookbook 'sc910_sxa180'
+  scp_packer_cookbook 'sc910_jss1100'
+  scp_packer_cookbook 'sc910_sxa180_jss1100'
+  scp_packer_cookbook 'sc911_sxa181'
+  scp_packer_cookbook 'sc911_jss1101'
+  scp_packer_cookbook 'sc911_sxa181_jss1101'
 
   # Sitecore Commerce 9.0
   scp_packer_cookbook 'xc901'
@@ -31,7 +51,9 @@ def scp_packer_sources
   scp_cookbook 'components', 'sql'
 
   scp_cookbook 'components', 'solr'
-  scp_cookbook 'components', 'sitecore'
+  scp_cookbook 'components', 'sitecore', '90x'
+  scp_cookbook 'components', 'sitecore', '91x'
+  scp_cookbook 'components', 'sitecore_modules'
   scp_cookbook 'components', 'commerce'
   scp_cookbook 'components', 'develop'
 end

@@ -1,0 +1,22 @@
+#define parameters
+$PSScriptRoot = "<%= @config['root'] %>"
+$packageFullPath = "<%= @config['package_full_path'] %>"
+$prefix = "<%= @config['prefix'] %>"
+$site = "$($prefix).local"
+
+$msdeploy = "C:/Program Files/IIS/Microsoft Web Deploy V3/msdeploy.exe"
+$msdeployArgs = 
+    "-source:package=`"$packageFullPath`"",
+    "-allowUntrusted",
+    "-dest:auto",
+    "-setParam:name=`"Application Path`",value=`"$site`"",
+    "-verb:sync",
+    "-retryAttempts=2",
+    "-enableRule:DoNotDeleteRule",
+    "-disableLink:AppPoolExtension",
+    "-disableLink:ContentExtension",
+    "-disableLink:CertificateExtension"
+
+$p = & $msdeploy $msdeployArgs
+$p.HasExited
+$p.ExitCode

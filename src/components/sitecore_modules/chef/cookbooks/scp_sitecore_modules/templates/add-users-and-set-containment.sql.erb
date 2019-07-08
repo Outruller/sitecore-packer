@@ -1,0 +1,77 @@
+:SETVAR DatabasePrefix <%= @config['prefix'] %>
+:SETVAR Password <%= @config['sql_collectionuser_password'] %>
+
+USE [$(DatabasePrefix)_Core]
+GO
+
+ALTER DATABASE [$(DatabasePrefix)_Core]
+    SET CONTAINMENT = PARTIAL
+    WITH ROLLBACK IMMEDIATE;
+
+IF USER_ID('coreuser') IS NULL
+    BEGIN
+        CREATE USER [coreuser] WITH PASSWORD=N'$(Password)', DEFAULT_SCHEMA=[dbo]
+
+        ALTER ROLE [aspnet_Membership_BasicAccess] ADD MEMBER [coreuser]
+        ALTER ROLE [aspnet_Membership_FullAccess] ADD MEMBER [coreuser]
+        ALTER ROLE [aspnet_Membership_ReportingAccess] ADD MEMBER [coreuser]
+        ALTER ROLE [aspnet_Profile_BasicAccess] ADD MEMBER [coreuser]
+        ALTER ROLE [aspnet_Profile_FullAccess] ADD MEMBER [coreuser]
+        ALTER ROLE [aspnet_Profile_ReportingAccess] ADD MEMBER [coreuser]
+        ALTER ROLE [aspnet_Roles_BasicAccess] ADD MEMBER [coreuser]
+        ALTER ROLE [aspnet_Roles_FullAccess] ADD MEMBER [coreuser]
+        ALTER ROLE [aspnet_Roles_ReportingAccess] ADD MEMBER [coreuser]
+        ALTER ROLE [db_datareader] ADD MEMBER [coreuser]
+        ALTER ROLE [db_datawriter] ADD MEMBER [coreuser]
+
+        GRANT CONNECT TO [coreuser] AS [dbo]
+        GRANT EXECUTE TO [coreuser] AS [dbo]
+    END
+GO
+
+IF USER_ID('securityuser') IS NULL
+    BEGIN
+        CREATE USER [securityuser] WITH PASSWORD=N'$(Password)', DEFAULT_SCHEMA=[dbo]
+
+        ALTER ROLE [aspnet_Membership_BasicAccess] ADD MEMBER [securityuser]
+        ALTER ROLE [aspnet_Membership_FullAccess] ADD MEMBER [securityuser]
+        ALTER ROLE [aspnet_Membership_ReportingAccess] ADD MEMBER [securityuser]
+        ALTER ROLE [aspnet_Profile_BasicAccess] ADD MEMBER [securityuser]
+        ALTER ROLE [aspnet_Profile_FullAccess] ADD MEMBER [securityuser]
+        ALTER ROLE [aspnet_Profile_ReportingAccess] ADD MEMBER [securityuser]
+        ALTER ROLE [aspnet_Roles_BasicAccess] ADD MEMBER [securityuser]
+        ALTER ROLE [aspnet_Roles_FullAccess] ADD MEMBER [securityuser]
+        ALTER ROLE [aspnet_Roles_ReportingAccess] ADD MEMBER [securityuser]
+        ALTER ROLE [db_datareader] ADD MEMBER [securityuser]
+        ALTER ROLE [db_datawriter] ADD MEMBER [securityuser]
+
+        GRANT CONNECT TO [securityuser] AS [dbo]
+        GRANT EXECUTE TO [securityuser] AS [dbo]
+    END
+GO
+
+-------------------------------------------------------------------------------
+
+USE [$(DatabasePrefix)_Master]
+GO
+
+ALTER DATABASE [$(DatabasePrefix)_Master]
+    SET CONTAINMENT = PARTIAL
+    WITH ROLLBACK IMMEDIATE;
+
+IF USER_ID('masteruser') IS NULL
+    BEGIN
+        CREATE USER [masteruser] WITH PASSWORD=N'$(Password)', DEFAULT_SCHEMA=[dbo]
+
+        ALTER ROLE [db_datareader] ADD MEMBER [masteruser]
+        ALTER ROLE [db_datawriter] ADD MEMBER [masteruser]
+
+        GRANT CONNECT TO [masteruser] AS [dbo]
+        GRANT EXECUTE TO [masteruser] AS [dbo]
+    END
+GO
+
+-------------------------------------------------------------------------------
+
+USE [master]
+GO
