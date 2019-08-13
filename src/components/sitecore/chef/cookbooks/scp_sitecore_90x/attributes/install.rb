@@ -4,6 +4,7 @@ default['scp_sitecore_90x']['install'] = {
     'password' => 'vagrant',
     'prefix' => 'sc9',
     'root' => 'c:/tmp/sitecore',
+    'wwwroot_path' => 'c:/inetpub/wwwroot',
     'site_path' => 'c:/inetpub/wwwroot/sc9.local',
     'xconnect_path' => 'c:/inetpub/wwwroot/sc9.xconnect',
     'solr_root' => 'C:/tools/solr-6.6.2',
