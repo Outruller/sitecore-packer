@@ -1,0 +1,23 @@
+{
+    "Deployment": {
+        "Location": "West Europe",
+        "ResourceGroupName": "Packer",
+        "DeploymentName": "PackerDeployment",
+        "TemplateFile": "azure_deploy.json",
+        "DnsPrefix": "packerdns",
+        "AdminName": "packer",
+        "AdminPass": "Engine123",
+        "Files": [
+            "scripts/configure.ps1",
+            "scripts/startup.ps1",
+            "scripts/open.ps1",
+            "data/2016_developer.rb",
+            "data/license.xml",
+            "data/secret.rb"
+        ]
+    },
+    "Storage": {
+        "SkuName": "Standard_LRS",
+        "ContainerName": "container"
+    }
+}
